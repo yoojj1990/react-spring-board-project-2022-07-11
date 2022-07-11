@@ -109,7 +109,7 @@ const style = {
 
 const FormContainer = {
     display:'flex',
-    flexDirection:'column'
+    flexFlow:'row wrap'
 }
 
 export default EditUser;
