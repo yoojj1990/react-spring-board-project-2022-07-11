@@ -8,7 +8,6 @@ class EditUser extends Component {
         super(props);
 
         this.state = {
-            username:'',
             phone:'',
             nickname:'',
             age:'',
@@ -51,7 +50,7 @@ class EditUser extends Component {
         e.preventDefault();
         let user = {
             id: this.state.id,
-            username: this.state.username,
+            username : this.state.username,
             phone: this.state.phone,
             nickname: this.state.nickname,
             age: this.state.age,
@@ -60,7 +59,7 @@ class EditUser extends Component {
         ApiService.editUser(user)
         .then(res=>{
             this.setState({
-                message: user.username + '님 정보 수정 성공'
+                message: user.nickname + '님 정보 수정 성공'
             })
             this.props.history.push('/users'); // 회원정보 수정후 리스트로 요청
         })
@@ -76,7 +75,7 @@ class EditUser extends Component {
                 <form style={FormContainer}>
                 
                     <label>회원이름 : </label>
-                    <TextField type='text' name="username" readOnly={true} Value={this.state.username} fullWidth margin='normal'></TextField>
+                    <TextField type='text' name="username" readOnly={true} value={this.state.username} fullWidth margin='normal'></TextField>
                 
                     <label>전화번호 : </label>
                     <TextField type='text' placeholder="전화번호를 수정" name="phone"

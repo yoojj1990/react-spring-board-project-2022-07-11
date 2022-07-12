@@ -1,12 +1,19 @@
-import { Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@material-ui/core";
 import React, { Component } from "react";
 import ApiService from "../../ApiService";
-import CreateIcon from "@material-ui/icons/Create"
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import Table from "@material-ui/core/Table";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import TableBody from "@material-ui/core/TableBody";
+import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete"
 
 
-class UserList extends Component {
 
+class UserList extends Component {
+    
     constructor(props){
         super(props);
 
@@ -16,39 +23,39 @@ class UserList extends Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount(){
         this.reloadUserList();
     }
 
     reloadUserList = ()=> {
         ApiService.userList()
-        .then(res => {
+        .then(res=>{
             this.setState({
-                users : res.data
-            });
+           users : res.data
+            })
         })
-        .catch(err => {
+        .catch(err=>{
             console.log('List Error!', err);
         })
     }
 
     deleteUser = (userID)=> {
         ApiService.deleteUser(userID)
-        .then(res => {
+        .then( res=> {
             this.setState({
-                messages: '회원 탈퇴(삭제) 성공'
+                message: '회원 탈퇴(삭제) 성공'
             });
             this.setState({
-                users : this.state.users.filter(user => user.id !== userID) // 회원삭제 -> 회원 아이디와 같지 않은 원소만 삽입
+                users: this.state.users.filter( user => user.id !== userID)//회원삭제->회원아이디와 같지 않은 원소만 삽입
             });
-        })   
-        .catch(err => {
-            console.log('회원 삭제 에러!', err);
+        })
+        .catch(err=> {
+            console.log('회원삭제 에러!', err);
         })        
     }
 
     editUser = (ID)=> {
-        window.localStorage.setItem("userID", ID); // 웹브라우저의 로컬 저장소에 임시로 id값을 저장
+        window.localStorage.setItem("userID", ID);//웹브라우저의 로컬저장소에 임시로 id값을 저장
         this.props.history.push('/edit-user');
     }
 
@@ -58,9 +65,9 @@ class UserList extends Component {
     }
 
     render(){
-        return (
+        return(
             <div>
-                <Typography variant="h4" style={style}>동호회 회원 리스트</Typography>
+                <Typography variant="h4" style={style}>동호회 회원 리스트</Typography>                 
                 <Button variant="contained" color="primary" onClick={this.addUser}>회원추가</Button>
                 <Table>
                     <TableHead>
@@ -85,26 +92,30 @@ class UserList extends Component {
                                 <TableCell>{user.age}</TableCell>
                                 <TableCell>{user.membership}</TableCell>
                                 <TableCell>
-                                    <Button onClick={()=> this.editUser(user.id)}>
+                                    <button onClick={()=> this.editUser(user.id)}>
                                         <CreateIcon></CreateIcon>
-                                    </Button>
-                                    <Button onClick={()=> this.deleteUser(user.id)}>
+                                    </button>
+                                </TableCell>
+                                <TableCell>
+                                    <button onClick={()=> this.deleteUser(user.id)}>
                                         <DeleteIcon></DeleteIcon>    
-                                    </Button>                            
-                                </TableCell>    
-                            </TableRow>   
-                        )}
+                                    </button>
+                                </TableCell>
+                        </TableRow>                            
+                            
+                            )}
+                        
+
                     </TableBody>
                 </Table>
-            </div>  
+            </div>
         );
     }
-    
 }
 
 const style = {
     display:'flex',
-    justifyContent: 'center'
+    justifyContent : 'center'
 }
 
 export default UserList;

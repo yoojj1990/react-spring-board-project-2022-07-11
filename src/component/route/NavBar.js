@@ -2,7 +2,10 @@ import { AppBar, Button, IconButton, Toolbar, Typography } from "@material-ui/co
 import React from "react";
 import MenuIcon from '@material-ui/icons/Menu'
 
-function NavBar() {
+
+
+function NavBar({history}) {    
+
     return (
         <div>   
             <AppBar position="static">
@@ -17,7 +20,7 @@ function NavBar() {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         React User List
                     </Typography>
-                    <Button color="inherit">HONE</Button>
+                    <Button color="inherit" onClick={()=>history.pushState('/')}>HONE</Button>
                 </Toolbar>
             </AppBar>
         </div>
